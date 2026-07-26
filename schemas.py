@@ -18,6 +18,11 @@ class UserResponse(UserBase):
     image_file: str | None
     image_path: str
 
+class UserUpdate(BaseModel):
+    username: str | None = Field(default=None, min_length=1, max_length=50)
+    email: EmailStr | None = Field(default=None, max_length=120)
+    image_file: str | None = Field(default=None,min_length=1, max_length=200)    
+
 
 class PostBase(BaseModel): # this PostBase scheme defines the common fields and validation rules for a blog post. It inherits from BaseModel, which is the base class provided by Pydantic for creating data models.
     title:str=Field(min_length=1,max_length=100)
@@ -26,6 +31,10 @@ class PostBase(BaseModel): # this PostBase scheme defines the common fields and 
 
 class PostCreate(PostBase): #this postCreate scheme defines what we expect when creating a new post. It inherits from PostBase and adds any additional fields or validation rules specific to the creation of a post.
     user_id:int 
+
+class PostUpdate(BaseModel):
+    title:str|None=Field(default=None,min_length=1,max_length=100)
+    content:str|None=Field(default=None,min_length=1)    
 
 class PostResponse(PostBase): #this PostResponse scheme defines what we expect when returning a post in a response. It inherits from PostBase and adds any additional fields or validation rules specific to the response of a post.
     id:int
